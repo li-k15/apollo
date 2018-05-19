@@ -29,26 +29,8 @@
 #include "modules/planning/common/planning_gflags.h"
 #include "modules/planning/common/planning_thread_pool.h"
 #include "modules/planning/common/planning_util.h"
-#include "modules/planning/common/trajectory/trajectory_stitcher.h"
-#include "modules/planning/planner/em/em_planner.h"
-#include "modules/planning/planner/lattice/lattice_planner.h"
-#include "modules/planning/planner/rtk/rtk_replay_planner.h"
-#include "modules/planning/reference_line/reference_line_provider.h"
-#include "modules/planning/tasks/traffic_decider/traffic_decider.h"
+#include "modules/g() { Stop(); }
 
-namespace apollo {
-namespace planning {
-
-using apollo::common::ErrorCode;
-using apollo::common::Status;
-using apollo::common::TrajectoryPoint;
-using apollo::common::VehicleState;
-using apollo::common::VehicleStateProvider;
-using apollo::common::adapter::AdapterManager;
-using apollo::common::time::Clock;
-using apollo::hdmap::HDMapUtil;
-
-Planning::~Planning() { Stop(); }
 
 std::string Planning::Name() const { return "planning"; }
 
@@ -360,7 +342,7 @@ void Planning::RunOnce() {
           ->mutable_not_ready()
           ->set_reason(msg);
       status.Save(trajectory_pb->mutable_header()->mutable_status());
-      //PublishPlanningPb(trajectory_pb, start_timestamp);
+      PublishPlanningPb(trajectory_pb, start_timestamp);
     }
 
     auto seq_num = frame_->SequenceNum();
@@ -381,7 +363,7 @@ void Planning::RunOnce() {
     }
   }
 
-  status = Plan(start_timestamp, stitching_trajectory, trajectory_pb);
+  //status = Plan(start_timestamp, stitching_trajectory, trajectory_pb);
 
   const auto time_diff_ms = (Clock::NowInSeconds() - start_timestamp) * 1000;
   ADEBUG << "total planning time spend: " << time_diff_ms << " ms.";
@@ -412,7 +394,7 @@ void Planning::RunOnce() {
   }
 
   trajectory_pb->set_is_replan(is_replan);
-  //PublishPlanningPb(trajectory_pb, start_timestamp);
+  PublishPlanningPb(trajectory_pb, start_timestamp);
   ADEBUG << "Planning pb:" << trajectory_pb->header().DebugString();
 
   auto seq_num = frame_->SequenceNum();
