@@ -360,7 +360,7 @@ void Planning::RunOnce() {
           ->mutable_not_ready()
           ->set_reason(msg);
       status.Save(trajectory_pb->mutable_header()->mutable_status());
-      PublishPlanningPb(trajectory_pb, start_timestamp);
+      //PublishPlanningPb(trajectory_pb, start_timestamp);
     }
 
     auto seq_num = frame_->SequenceNum();
