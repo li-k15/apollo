@@ -412,7 +412,7 @@ void Planning::RunOnce() {
   }
 
   trajectory_pb->set_is_replan(is_replan);
-  PublishPlanningPb(trajectory_pb, start_timestamp);
+  //PublishPlanningPb(trajectory_pb, start_timestamp);
   ADEBUG << "Planning pb:" << trajectory_pb->header().DebugString();
 
   auto seq_num = frame_->SequenceNum();
